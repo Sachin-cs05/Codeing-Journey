@@ -1,3 +1,4 @@
+import java.util.*;
 public class graph_client{
     public static void main(String[] args) {
         Graph g = new Graph(7);
@@ -10,5 +11,6 @@ public class graph_client{
         g.AddEdge(7, 5, 2);
         g.AddEdge(6, 7, 3);
         g.dispaly();
+        System.out.println(g.hashpath(1, 6, new HashSet<>()));
     }
 }

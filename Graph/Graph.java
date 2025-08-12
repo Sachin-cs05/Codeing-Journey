@@ -41,4 +41,17 @@ public class Graph{
             System.out.println(key+" --> "+map.get(key));
         }
     }
+     public boolean hashpath(int src, int dis, HashSet<Integer> visited){
+        if(src == dis){
+            return true;
+        }
+        visited.add(src);
+        for(int nbrs : map.get(src).keySet()){
+            if(!visited.contains(nbrs)){
+                boolean ans = hashpath(nbrs, dis, visited);
+                if(ans) return ans;
+            }
+        }
+        return false;
+     }
 }
