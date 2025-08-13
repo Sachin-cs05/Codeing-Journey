@@ -41,6 +41,8 @@ public class Graph{
             System.out.println(key+" --> "+map.get(key));
         }
     }
+
+    //  Question --> find path exist or not
      public boolean hashpath(int src, int dis, HashSet<Integer> visited){
         if(src == dis){
             return true;
@@ -54,4 +56,146 @@ public class Graph{
         }
         return false;
      }
+    
+     public void printAllPath(int src, int dis, HashSet<Integer> visited, String ans){
+        if(src == dis){
+            System.out.println(ans+src);
+            return;
+        }
+        visited.add(src);
+        for(int nbrs : map.get(src).keySet()){
+            if(!visited.contains(nbrs)){
+                printAllPath(nbrs, dis, visited, ans+src);
+            }
+        }
+        visited.remove(src);
+     }
+
+    //  BFS
+    public boolean BFS(int src, int des){
+        HashSet<Integer> visited = new HashSet<>();
+        Queue<Integer> q = new LinkedList<>();
+        q.add(src);
+        while(!q.isEmpty()){
+            // 1. remove
+            int rv = q.poll();
+
+            // 2. Ignore if already visited
+            if(visited.contains(rv)){
+                continue;
+            }
+
+            // 3. mark visited
+            visited.add(rv);
+
+            // 4. self work
+            if(rv == des){
+                return true;
+            }
+
+            // 5. add unvisited nbrs
+            for(int nbrs : map.get(rv).keySet()){
+                if(!visited.contains(nbrs)){
+                    q.add(nbrs);
+                }
+            }
+        }
+        return false;
+    }
+
+    // DFS
+    public boolean DFS(int src, int des){
+        HashSet<Integer> visited = new HashSet<>();
+        Stack<Integer> st = new Stack<>();
+        st.push(src);
+        while(!st.isEmpty()){
+            // 1. remove
+            int rv = st.pop();
+
+            // 2. Ignore if already visited
+            if(visited.contains(rv)){
+                continue;
+            }
+
+            // 3. mark visited
+            visited.add(rv);
+
+            // 4. self work
+            if(rv == des){
+                return true;
+            }
+
+            // 5. add unvisited nbrs
+            for(int nbrs : map.get(rv).keySet()){
+                if(!visited.contains(nbrs)){
+                    st.push(nbrs);
+                }
+            }
+        }
+        return false;
+    }
+
+    public void BFT(){
+        HashSet<Integer> visited = new HashSet<>();
+        Queue<Integer> q = new LinkedList<>();
+        for(int src : map.keySet()){
+            if(visited.contains(src)) continue;
+            q.add(src);
+            while(!q.isEmpty()){
+                // 1. remove
+                int rv = q.poll();
+
+                // 2. Ignore if already visited
+                if(visited.contains(rv)){
+                    continue;
+                }
+
+                // 3. mark visited
+                visited.add(rv);
+
+                // 4. self work
+                System.out.print(rv+ " ");
+
+                // 5. add unvisited nbrs
+                for(int nbrs : map.get(rv).keySet()){
+                    if(!visited.contains(nbrs)){
+                        q.add(nbrs);
+                    }
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    public void DFT(){
+        HashSet<Integer> visited = new HashSet<>();
+        Stack<Integer> st = new Stack<>();
+        for(int src : map.keySet()){
+            if(visited.contains(src)) continue;
+            st.push(src);
+            while(!st.isEmpty()){
+                // 1. remove
+                int rv = st.pop();
+
+                // 2. Ignore if already visited
+                if(visited.contains(rv)){
+                    continue;
+                }
+
+                // 3. mark visited
+                visited.add(rv);
+
+                // 4. self work
+                System.out.print(rv+" ");
+
+                // 5. add unvisited nbrs
+                for(int nbrs : map.get(rv).keySet()){
+                    if(!visited.contains(nbrs)){
+                        st.push(nbrs);
+                    }
+                }
+            }
+        }
+        System.out.println();
+    }
 }
