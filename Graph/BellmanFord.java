@@ -20,9 +20,13 @@ public class BellmanFord{
 		}
 		dis[src] = 0;
 		List<EdgePair> ll = getalledge();
-		for(int i = 1;i<=v-1;i++){
+		for(int i = 1;i<=v;i++){
 			for ( EdgePair e : ll) {
-				if(dis[e.e2]>dis[e.e1]+e.cost){
+                if(i == v && dis[e.e2]>dis[e.e1]+e.cost) {
+                    System.out.println("-ve wt cycle");
+                    return;
+                }
+				else if(dis[e.e2]>dis[e.e1]+e.cost){
 					dis[e.e2]=dis[e.e1]+e.cost;
 				}
 			}
@@ -73,7 +77,8 @@ public class BellmanFord{
 		bf.AddEdge(3,4,-3);
 		bf.AddEdge(4, 5, 4);
 		bf.AddEdge(5, 2, 1);
-		bf.AddEdge(2, 5, 2);
+        // bf.AddEdge(2, 5, -2);
+		bf.AddEdge(2, 5, -2);
 		bf.BellManFordAlgo(1);
 	}
 }
